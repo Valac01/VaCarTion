@@ -28,7 +28,17 @@ const db = mysql.createConnection({
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
 });
-db.connect();
+db.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      console.error('message: ' + err.message);
+      console.error('errno: ' + err.errno);
+
+      return;
+    }
+
+    console.log("connection id", db.threadId)
+});
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',

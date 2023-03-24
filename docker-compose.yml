@@ -7,6 +7,8 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     restart: always
+    ports:
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=someassignment
       - MYSQL_DATABASE=car_rental
@@ -19,14 +21,18 @@ services:
     ports:
       - 8080:8080
 
-  website:
+  web:
     depends_on:
       - db
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - 4000:3000
+      - 80:3000
     environment:
+      - DB_HOST=db
+      - DB_PORT=3306
       - DB_USER=mysqluser
       - DB_PASS=mysqlpassword
       - DB_NAME=car_rental
