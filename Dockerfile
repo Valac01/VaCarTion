@@ -2,12 +2,12 @@ FROM node:18.15.0-alpine3.16
 
 WORKDIR /usr/src/app
 
-COPY ./package*.json .
+COPY ./package*.json ./
 
 RUN npm install
 
 EXPOSE 3000
 
-COPY . .
+COPY ./ ./
 
 CMD [ "node", "index.js" ]
